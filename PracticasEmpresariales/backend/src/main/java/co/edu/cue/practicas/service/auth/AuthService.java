@@ -86,6 +86,7 @@ public class AuthService {
             codigosLogin.put(usuario.getId(),
                     new CodigoEntry(codigo, LocalDateTime.now().plusMinutes(EXPIRACION_MINUTOS)));
 
+            log.info("CODIGO_2FA_LOGIN para {}: {}", usuario.getCorreo(), codigo);
             emailService.enviarCodigoLogin(usuario.getCorreo(), usuario.getNombre(), codigo);
             log.info("[AUTH] Código 2FA de login enviado al usuario {}", usuario.getId());
 
