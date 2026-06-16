@@ -5,7 +5,7 @@ import axios from 'axios'
  * Un solo punto de entrada para todas las peticiones HTTP.
  */
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   headers: { 'Content-Type': 'application/json' },
 })
 
