@@ -9,6 +9,7 @@ import { Button } from '../../components/common/Button/Button'
 import { Input } from '../../components/common/Input/Input'
 import { Table } from '../../components/common/Table/Table'
 import { useToast } from '../../components/common/Notifications/Toast'
+import { Select } from '../../components/common/Select/Select'
 
 const ROL_OPTIONS: Rol[] = [
   'ADMIN_DTI', 'COORDINACION_ACADEMICA', 'COORDINADOR_PRACTICAS',
@@ -138,38 +139,38 @@ export default function UsuariosPage() {
               <Input label="Correo electrónico" type="email" required value={form.correo} onChange={e => setForm({ ...form, correo: e.target.value })} />
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Rol <span className="text-red-500">*</span></label>
-                <select className="input-field" required value={form.rol} onChange={e => handleRolChange(e.target.value as Rol)}>
+                <Select required value={form.rol} onChange={e => handleRolChange(e.target.value as Rol)}>
                   <option value="">Seleccionar...</option>
                   {ROL_OPTIONS.map(r => <option key={r} value={r}>{ROL_LABELS[r]}</option>)}
-                </select>
+                </Select>
               </div>
               {form.rol === 'COORDINACION_ACADEMICA' && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Cargo <span className="text-red-500">*</span></label>
-                  <select className="input-field" required value={form.etiquetaCargo} onChange={e => setForm({ ...form, etiquetaCargo: e.target.value as EtiquetaCargo })}>
+                  <Select required value={form.etiquetaCargo} onChange={e => setForm({ ...form, etiquetaCargo: e.target.value as EtiquetaCargo })}>
                     <option value="">Seleccionar...</option>
                     <option value="COORDINACION_ACADEMICA">Coordinación Académica</option>
                     <option value="SECRETARIA">Secretaría</option>
-                  </select>
+                  </Select>
                 </div>
               )}
               <Input label="Teléfono" value={form.telefono} onChange={e => setForm({ ...form, telefono: e.target.value })} />
               {form.rol === 'COORDINACION_ACADEMICA' && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Facultad</label>
-                  <select className="input-field" value={form.facultadId} onChange={e => setForm({ ...form, facultadId: e.target.value })}>
+                  <Select value={form.facultadId} onChange={e => setForm({ ...form, facultadId: e.target.value })}>
                     <option value="">— Sin asignar —</option>
                     {facultades.map(f => <option key={f.id} value={f.id}>{f.nombre}</option>)}
-                  </select>
+                  </Select>
                 </div>
               )}
               {['COORDINADOR_PRACTICAS', 'ESTUDIANTE'].includes(form.rol) && (
                 <div className="col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Programa <span className="text-red-500">*</span></label>
-                  <select className="input-field" required value={form.programaId} onChange={e => setForm({ ...form, programaId: e.target.value })}>
+                  <Select required value={form.programaId} onChange={e => setForm({ ...form, programaId: e.target.value })}>
                     <option value="">— Selecciona un programa —</option>
                     {programas.map(p => <option key={p.id} value={p.id}>{p.nombre} ({p.facultadNombre})</option>)}
-                  </select>
+                  </Select>
                 </div>
               )}
               {form.rol === 'ESTUDIANTE' && (
@@ -177,12 +178,12 @@ export default function UsuariosPage() {
                   <Input label="Identificación" required placeholder="Cédula o documento" value={form.identificacion} onChange={e => setForm({ ...form, identificacion: e.target.value })} />
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Semestre <span className="text-red-500">*</span></label>
-                    <select className="input-field" required value={form.semestre} onChange={e => setForm({ ...form, semestre: e.target.value })}>
+                    <Select required value={form.semestre} onChange={e => setForm({ ...form, semestre: e.target.value })}>
                       <option value="">Seleccionar...</option>
                       {Array.from({ length: 12 }, (_, i) => i + 1).map(s => (
                         <option key={s} value={s}>Semestre {s}</option>
                       ))}
-                    </select>
+                    </Select>
                   </div>
                   <div className="col-span-2">
                     <Input label="Contacto de Emergencia" placeholder="Ana Herrera - 3001234567" value={form.contactoEmergencia} onChange={e => setForm({ ...form, contactoEmergencia: e.target.value })} />

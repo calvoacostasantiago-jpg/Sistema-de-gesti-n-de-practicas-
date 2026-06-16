@@ -7,6 +7,7 @@ import { Modal, ConfirmModal } from '../../components/common/Modal/Modal'
 import { Button } from '../../components/common/Button/Button'
 import { Table } from '../../components/common/Table/Table'
 import { useToast } from '../../components/common/Notifications/Toast'
+import { Select } from '../../components/common/Select/Select'
 
 const ESTADOS: Array<{ label: string; value: string }> = [
   { label: 'Todas',                        value: '' },
@@ -126,9 +127,9 @@ export default function AsignacionesPage() {
       <div className="card py-3 flex gap-4 items-end">
         <div className="w-full md:max-w-xs">
           <label className="block text-sm font-medium text-gray-700 mb-1">Filtrar por estado</label>
-          <select className="input-field" value={estado} onChange={e => setEstado(e.target.value)}>
+          <Select value={estado} onChange={e => setEstado(e.target.value)}>
             {ESTADOS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-          </select>
+          </Select>
         </div>
         <button className="btn-secondary self-end" onClick={() => cargar(estado)} disabled={loading}>Refrescar</button>
       </div>

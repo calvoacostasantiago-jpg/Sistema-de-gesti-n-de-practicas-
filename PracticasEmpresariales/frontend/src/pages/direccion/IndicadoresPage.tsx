@@ -11,6 +11,7 @@ import {
 } from 'recharts'
 import { sprint4Service } from '../../services/sprint4Service'
 import type { TableroGerencialResponse } from '../../types'
+import { Select } from '../../components/common/Select/Select'
 
 /* ─── Helpers ─────────────────────────────────────────────────────────────── */
 
@@ -139,7 +140,7 @@ const TRIMESTRES = [
   { value: 4, label: 'T4', sublabel: 'Oct – Dic' },
 ]
 
-const ITEMS_POR_PAGINA = 4
+const ITEMS_POR_PAGINA = 3
 
 export default function IndicadoresPage() {
   const now = new Date()
@@ -195,7 +196,6 @@ export default function IndicadoresPage() {
   const maxPrograma    = porPrograma.reduce((m, [, v]) => Math.max(m, v), 1)
 
   const hasAvanceFacultad = avanceFacultad.length > 0
-  const hasAvancePrograma = porPrograma.length > 0
 
   // Datos paginados para la sección de facultad / programa
   const listaCompleta = hasAvanceFacultad
@@ -223,13 +223,14 @@ export default function IndicadoresPage() {
 
         <div className="flex flex-col sm:items-end gap-2">
           {/* Selector de año */}
-          <select
+          <Select
             value={anio}
             onChange={e => setAnio(Number(e.target.value))}
-            className="input-field w-28 text-sm py-1.5"
+            className="w-28"
+            size="sm"
           >
             {YEARS.map(y => <option key={y} value={y}>{y}</option>)}
-          </select>
+          </Select>
 
           {/* Selector de trimestre */}
           <div className="flex gap-1.5">

@@ -4,6 +4,7 @@ import { sprint4Service, type EnviarEncuestaRequest } from '../../services/sprin
 import { Button } from '../../components/common/Button/Button'
 import { Modal } from '../../components/common/Modal/Modal'
 import { useToast } from '../../components/common/Notifications/Toast'
+import { Select } from '../../components/common/Select/Select'
 
 const TITULO_DEFAULT = 'Encuesta de Satisfaccion 2026-I'
 const PREGUNTAS_DEFAULT = [
@@ -186,33 +187,30 @@ export default function EncuestasCoordinadorPage() {
           </div>
 
           {/* Filtro por programa */}
-          <select
-            className="input-field"
+          <Select
             value={filtroPrograma}
             onChange={e => setFiltroPrograma(e.target.value)}
           >
             <option value="">Todos los programas</option>
             {programas.map(p => <option key={p} value={p}>{p}</option>)}
-          </select>
+          </Select>
 
           {/* Filtro por empresa */}
-          <select
-            className="input-field"
+          <Select
             value={filtroEmpresa}
             onChange={e => setFiltroEmpresa(e.target.value)}
           >
             <option value="">Todas las empresas</option>
             {empresas.map(e => <option key={e} value={e}>{e}</option>)}
-          </select>
+          </Select>
 
           {/* Filtro por estado */}
-          <select
-            className="input-field"
+          <Select
             value={filtroEstado}
             onChange={e => setFiltroEstado(e.target.value as FiltroEstado)}
           >
             {ESTADO_OPCIONES.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-          </select>
+          </Select>
         </div>
 
         {/* Resultado + limpiar */}

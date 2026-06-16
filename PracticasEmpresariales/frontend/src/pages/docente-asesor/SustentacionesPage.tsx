@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { InstanciaPracticaResponseV2 } from '../../types'
 import { seguimientoService } from '../../services/seguimientoService'
 import { sustentacionDocenteService } from '../../services/sustentacionDocenteService'
+import { DatePicker } from '../../components/common/DatePicker/DatePicker'
 
 const TODAY = new Date().toISOString().split('T')[0]
 
@@ -75,9 +76,7 @@ function PracticaCard({
           </p>
           <div>
             <label className="block text-xs text-gray-600 mb-1">Fecha de sustentación *</label>
-            <input
-              type="date"
-              className="input-field"
+            <DatePicker
               value={fechaSeleccionada}
               min={TODAY}
               max={p.fechaFin ?? undefined}

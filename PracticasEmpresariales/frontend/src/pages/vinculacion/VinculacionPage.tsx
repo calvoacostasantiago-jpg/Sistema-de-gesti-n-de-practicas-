@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import type { InstanciaPracticaResponseV2, UsuarioResponse, ApiResponse } from '../../types'
 import api from '../../services/api'
+import { Select } from '../../components/common/Select/Select'
+import { DatePicker } from '../../components/common/DatePicker/DatePicker'
 
 const TIPOS_FIRMA = ['TUTOR', 'DOCENTE', 'ESTUDIANTE'] as const
 type TipoFirma = typeof TIPOS_FIRMA[number]
@@ -291,22 +293,22 @@ export default function VinculacionPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de inicio *</label>
-              <input type="date" className="input-field" value={fechaInicio} onChange={e => setFechaInicio(e.target.value)} />
+              <DatePicker value={fechaInicio} onChange={e => setFechaInicio(e.target.value)} />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Fecha de fin *</label>
-              <input type="date" className="input-field" value={fechaFin} onChange={e => setFechaFin(e.target.value)} />
+              <DatePicker value={fechaFin} onChange={e => setFechaFin(e.target.value)} />
             </div>
           </div>
           {!instancia.docenteAsesorId && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Docente Asesor</label>
-              <select className="input-field" value={docenteAsesorId} onChange={e => setDocenteAsesorId(e.target.value)}>
+              <Select value={docenteAsesorId} onChange={e => setDocenteAsesorId(e.target.value)}>
                 <option value="">— Sin asignar —</option>
                 {docentes.map(d => (
                   <option key={d.id} value={d.id}>{d.nombre}</option>
                 ))}
-              </select>
+              </Select>
             </div>
           )}
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-800">

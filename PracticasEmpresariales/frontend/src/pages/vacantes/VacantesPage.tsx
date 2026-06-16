@@ -7,6 +7,7 @@ import { Button } from '../../components/common/Button/Button'
 import { Input } from '../../components/common/Input/Input'
 import { Table } from '../../components/common/Table/Table'
 import { useToast } from '../../components/common/Notifications/Toast'
+import { Select } from '../../components/common/Select/Select'
 
 type Tab = 'todas' | 'activas' | 'inactivas'
 
@@ -155,15 +156,14 @@ export default function VacantesPage() {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Empresa <span className="text-red-500">*</span>
               </label>
-              <select
-                className="input-field"
+              <Select
                 required
                 value={form.empresaId || ''}
                 onChange={e => setForm({ ...form, empresaId: Number(e.target.value) })}
               >
                 <option value="">Selecciona una empresa activa</option>
                 {empresas.map(em => <option key={em.id} value={em.id}>{em.razonSocial}</option>)}
-              </select>
+              </Select>
             </div>
             <Input
               label="Área"

@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../../context/AuthContext'
 import { MENUS_POR_ROL } from '../../../constants/menus'
-import { ROL_LABELS } from '../../../constants/roles'
 
 interface SidebarProps {
   isOpen: boolean
@@ -40,19 +39,6 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-      </div>
-
-      {/* User info */}
-      <div className="px-3 pt-3">
-        <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-indigo-900/40 border border-indigo-800/40">
-          <div className="w-7 h-7 rounded-lg bg-cue-accent text-white flex items-center justify-center text-xs font-bold shrink-0">
-            {user.nombre.charAt(0).toUpperCase()}
-          </div>
-          <div className="min-w-0">
-            <p className="text-[12px] font-medium text-white truncate leading-tight">{user.nombre}</p>
-            <p className="text-[11px] text-indigo-400 truncate mt-0.5">{ROL_LABELS[user.rol]}</p>
-          </div>
-        </div>
       </div>
 
       {/* Nav */}

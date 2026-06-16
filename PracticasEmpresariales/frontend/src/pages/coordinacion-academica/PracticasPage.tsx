@@ -7,6 +7,7 @@ import { Button } from '../../components/common/Button/Button'
 import { Input } from '../../components/common/Input/Input'
 import { Table } from '../../components/common/Table/Table'
 import { useToast } from '../../components/common/Notifications/Toast'
+import { Select } from '../../components/common/Select/Select'
 
 const FORM_INICIAL = {
   programaId: '',
@@ -120,11 +121,11 @@ export default function PracticasPage() {
       <div className="card py-3 flex gap-4 items-end flex-wrap">
         <div className="flex-1 min-w-48">
           <label className="block text-xs font-medium text-gray-600 mb-1">Filtrar por programa</label>
-          <select className="input-field" value={filtroPrograma}
+          <Select value={filtroPrograma}
             onChange={e => setFiltroPrograma(e.target.value)}>
             <option value="">Todos los programas</option>
             {programasConCatalogos.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
-          </select>
+          </Select>
         </div>
         <span className="text-sm text-gray-500 self-end pb-2">
           {catalogosFiltrados.length} catálogo{catalogosFiltrados.length !== 1 ? 's' : ''}
@@ -176,11 +177,11 @@ export default function PracticasPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Programa <span className="text-red-500">*</span>
                 </label>
-                <select className="input-field" required value={form.programaId}
+                <Select required value={form.programaId}
                   onChange={e => setForm({ ...form, programaId: e.target.value })}>
                   <option value="">— Selecciona un programa —</option>
                   {programas.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
-                </select>
+                </Select>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <Input label="N° de práctica" type="number" min={1} required value={form.numeroPractica}

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { TipoAccion } from '../../types'
 import api from '../../services/api'
 import { ApiResponse, Pageable } from '../../types'
+import { Select } from '../../components/common/Select/Select'
 
 const TIPO_ACCCION_BADGE: Partial<Record<TipoAccion, string>> = {
   LOGIN_EXITOSO:        'bg-green-100 text-green-800',
@@ -64,8 +65,7 @@ export default function AuditoriaPage() {
       <div className="card flex gap-4 flex-wrap items-end">
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1">Tipo de acción</label>
-          <select
-            className="input-field w-auto"
+          <Select
             value={filtroAccion}
             onChange={e => { setFiltroAccion(e.target.value); setFiltroModulo('') }}
           >
@@ -80,12 +80,11 @@ export default function AuditoriaPage() {
             ].map(t => (
               <option key={t} value={t}>{t.replace(/_/g, ' ')}</option>
             ))}
-          </select>
+          </Select>
         </div>
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1">Módulo</label>
-          <select
-            className="input-field w-auto"
+          <Select
             value={filtroModulo}
             onChange={e => setFiltroModulo(e.target.value)}
           >
@@ -93,7 +92,7 @@ export default function AuditoriaPage() {
             {modulosDisponibles.map(m => (
               <option key={m} value={m}>{m}</option>
             ))}
-          </select>
+          </Select>
         </div>
         <button className="btn-primary" onClick={cargar}>Buscar</button>
       </div>

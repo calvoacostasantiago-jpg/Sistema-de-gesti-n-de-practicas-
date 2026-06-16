@@ -53,4 +53,44 @@
     @apply bg-indigo-50 text-indigo-700 text-xs font-medium px-2.5 py-0.5
            rounded-full border border-indigo-100;
   }
+
+  /* ─── Liquid glass: dropdowns & calendar ─────────────────────────────── */
+  .glass-panel {
+    @apply bg-white/75 backdrop-blur-xl backdrop-saturate-150 border border-white/60
+           shadow-[0_12px_36px_-8px_rgba(49,46,129,0.28)] ring-1 ring-black/5 rounded-2xl;
+  }
+  .glass-trigger {
+    @apply flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm text-left
+           bg-white/70 backdrop-blur-md border border-slate-200/70
+           hover:bg-white/90 hover:border-cue-accent/40
+           focus:outline-none focus:ring-2 focus:ring-cue-accent/20 focus:border-cue-accent
+           transition-all duration-150
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white/70;
+  }
+  .glass-trigger-sm {
+    @apply py-1.5;
+  }
+  .glass-option {
+    @apply flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-sm cursor-pointer
+           text-slate-700 transition-colors duration-100 hover:bg-cue-accent/10;
+  }
+  .glass-option-selected {
+    @apply bg-cue-accent/10 text-cue-accent font-medium;
+  }
+  .glass-day {
+    @apply h-7 w-7 flex items-center justify-center rounded-full text-xs cursor-pointer select-none
+           text-slate-700 transition-all duration-100 hover:bg-cue-accent/10;
+  }
+  .glass-day-today {
+    @apply border border-cue-accent/50 font-semibold text-cue-accent;
+  }
+  .glass-day-selected {
+    @apply bg-cue-accent text-white shadow-sm hover:bg-cue-secondary hover:text-white;
+  }
+  .glass-day-outside {
+    @apply text-slate-300;
+  }
+  .glass-day-disabled {
+    @apply text-slate-300 cursor-not-allowed pointer-events-none hover:bg-transparent;
+  }
 }

@@ -1,5 +1,6 @@
 import { Input } from '../common/Input/Input'
 import { Button } from '../common/Button/Button'
+import { Select } from '../common/Select/Select'
 import type { ProgramaResponse } from '../../types'
 import type { ConfigurarProgramaRequest } from '../../services/sprint4Service'
 import { REQUISITOS_CIERRE } from '../../constants/configuracion'
@@ -42,8 +43,7 @@ export function ParametrosProgramaPanel({
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Programa académico <span className="text-red-500">*</span>
         </label>
-        <select
-          className="input-field"
+        <Select
           value={programaId}
           onChange={e => onSeleccionarPrograma(e.target.value)}
         >
@@ -51,7 +51,7 @@ export function ParametrosProgramaPanel({
           {programas.map(p => (
             <option key={p.id} value={p.id}>{p.nombre}</option>
           ))}
-        </select>
+        </Select>
         <p className="text-xs text-gray-400 mt-1">
           Cada programa puede tener parámetros distintos. Selecciónalo para ver y editar su configuración vigente.
         </p>

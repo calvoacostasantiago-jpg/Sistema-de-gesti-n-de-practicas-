@@ -1,15 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { FacultadResponse, ProgramaResponse, ApiResponse, Pageable } from '../../types'
 import api from '../../services/api'
 import { Modal, ConfirmModal } from '../../components/common/Modal/Modal'
 import { Button } from '../../components/common/Button/Button'
 import { Input } from '../../components/common/Input/Input'
 import { Table } from '../../components/common/Table/Table'
+import { Pagination } from '../../components/common/Table/Pagination'
 import { useToast } from '../../components/common/Notifications/Toast'
+import { Select } from '../../components/common/Select/Select'
 
 export default function ProgramasPage() {
   const { showToast } = useToast()
-  const [programas, setProgramas]   = useState<ProgramaResponse[]>([])
+  const [pageData, setPageData]     = useState<Pageable<ProgramaResponse> | null>(null)
+  const [pagina, setPagina]         = useState(0)
+  const programas = useMemo(() => pageData?.content ?? [], [pageData])
   const [facultades, setFacultades] = useState<FacultadResponse[]>([])
   const [loading, setLoading]       = useState(true)
   const [saving, setSaving]         = useState(false)
@@ -23,15 +27,18 @@ export default function ProgramasPage() {
     open: false, id: 0, nombre: '', accion: 'desactivar',
   })
 
-  const cargar = () => {
+  const cargar = (page = pagina) => {
     setLoading(true)
-    api.get<ApiResponse<Pageable<ProgramaResponse>>>('/programas?incluirInactivos=true')
-      .then(r => setProgramas(r.data.datos?.content ?? []))
+    api.get<ApiResponse<Pageable<ProgramaResponse>>>('/programas', {
+      params: { incluirInactivos: true, page, size: 10 },
+    })
+      .then(r => setPageData(r.data.datos ?? null))
       .finally(() => setLoading(false))
   }
 
+  useEffect(() => { cargar(pagina) }, [pagina])
+
   useEffect(() => {
-    cargar()
     api.get<ApiResponse<Pageable<FacultadResponse>>>('/facultades?size=100')
       .then(r => setFacultades(r.data.datos?.content ?? []))
   }, [])
@@ -119,6 +126,14 @@ export default function ProgramasPage() {
         ))}
       </Table>
 
+      <Pagination
+        page={pagina}
+        totalPages={pageData?.totalPages ?? 0}
+        totalElements={pageData?.totalElements}
+        onPageChange={setPagina}
+        disabled={loading}
+      />
+
       <ConfirmModal
         open={confirm.open}
         title={confirm.accion === 'activar' ? 'Activar programa' : 'Desactivar programa'}
@@ -153,11 +168,11 @@ export default function ProgramasPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Facultad <span className="text-red-500">*</span>
                 </label>
-                <select className="input-field" required value={form.facultadId}
+                <Select required value={form.facultadId}
                   onChange={e => setForm({ ...form, facultadId: e.target.value })}>
                   <option value="">— Selecciona una facultad —</option>
                   {facultades.map(f => <option key={f.id} value={f.id}>{f.nombre}</option>)}
-                </select>
+                </Select>
               </div>
               <Input
                 label="N° de Prácticas"

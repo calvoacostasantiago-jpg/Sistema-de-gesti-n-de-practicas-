@@ -8,6 +8,7 @@ import { Pagination } from '../../components/common/Table/Pagination'
 import { useToast } from '../../components/common/Notifications/Toast'
 import { catalogoPracticaService } from '../../services/catalogoPracticaService'
 import type { CatalogoPracticaResponse } from '../../types'
+import { Select } from '../../components/common/Select/Select'
 
 const ESTADOS: Array<{ label: string; value: '' | EstadoEstudiante }> = [
   { label: 'Todos',    value: '' },
@@ -189,12 +190,12 @@ export default function EstudiantesPage() {
           <form onSubmit={handleMarcarApto} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Catálogo de práctica <span className="text-red-500">*</span></label>
-              <select className="input-field" required value={catalogoSeleccionado} onChange={e => setCatalogo(e.target.value)}>
+              <Select required value={catalogoSeleccionado} onChange={e => setCatalogo(e.target.value)}>
                 <option value="">— Selecciona un catálogo —</option>
                 {catalogos.filter(c => c.activo).map(c => (
                   <option key={c.id} value={c.id}>{c.programaNombre} · Práctica {c.numeroPractica} — {c.nombre}</option>
                 ))}
-              </select>
+              </Select>
             </div>
             <div className="flex gap-3">
               <Button variant="secondary" className="flex-1" type="button" onClick={() => setModalApto({ open: false, id: 0, nombre: '' })}>Cancelar</Button>

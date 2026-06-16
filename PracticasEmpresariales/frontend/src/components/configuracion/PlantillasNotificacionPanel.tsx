@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { Input } from '../common/Input/Input'
 import { Button } from '../common/Button/Button'
+import { Select } from '../common/Select/Select'
 import type { PlantillaNotificacionRequest } from '../../services/sprint4Service'
 import type { PlantillaNotificacionResponse, TipoEventoNotificacion } from '../../types'
 import {
@@ -152,8 +153,7 @@ export function PlantillasNotificacionPanel({
         <label className="block text-sm font-medium text-gray-700 mb-1">
           ¿Cuándo se envía este correo? <span className="text-red-500">*</span>
         </label>
-        <select
-          className="input-field"
+        <Select
           value={plantilla.tipoEvento}
           onChange={e => onCambiarEvento(e.target.value as TipoEventoNotificacion)}
         >
@@ -162,7 +162,7 @@ export function PlantillasNotificacionPanel({
               {guardadas.has(ev) ? '✓ ' : '○ '}{ETIQUETAS_EVENTO[ev]}
             </option>
           ))}
-        </select>
+        </Select>
         <p className="text-xs text-gray-400 mt-1">
           El sistema enviará este correo automáticamente cada vez que ocurra esta situación.
         </p>
