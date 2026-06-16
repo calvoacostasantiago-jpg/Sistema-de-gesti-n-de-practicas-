@@ -11,22 +11,25 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   ref,
 ) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-1.5">
       {label && (
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-xs font-medium text-slate-600">
           {label}
           {rest.required && <span className="text-red-500 ml-0.5">*</span>}
         </label>
       )}
       <input
         ref={ref}
-        className={`w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cue-accent focus:border-transparent transition-colors ${
-          error ? 'border-red-400 bg-red-50' : 'border-gray-300'
+        className={`w-full border rounded-lg px-3 py-2.5 text-sm
+          bg-white text-slate-900 placeholder:text-slate-400
+          focus:outline-none focus:ring-2 focus:ring-cue-accent/20 focus:border-cue-accent
+          transition-all duration-150 ${
+          error ? 'border-red-300 bg-red-50/50' : 'border-slate-200'
         } ${className}`}
         {...rest}
       />
-      {error && <p className="text-xs text-red-600">{error}</p>}
-      {hint && !error && <p className="text-xs text-gray-400">{hint}</p>}
+      {error && <p className="text-xs text-red-500">{error}</p>}
+      {hint && !error && <p className="text-xs text-slate-400">{hint}</p>}
     </div>
   )
 })

@@ -17,9 +17,15 @@ const ToastContext = createContext<ToastContextValue>({ showToast: () => {} })
 export const useToast = () => useContext(ToastContext)
 
 const STYLES: Record<ToastType, string> = {
-  success: 'bg-green-600 text-white',
-  error:   'bg-red-600 text-white',
-  warning: 'bg-amber-500 text-white',
+  success: 'bg-white border border-emerald-100 text-slate-800',
+  error:   'bg-white border border-red-100 text-slate-800',
+  warning: 'bg-white border border-amber-100 text-slate-800',
+}
+
+const ICON_STYLES: Record<ToastType, string> = {
+  success: 'bg-emerald-50 text-emerald-600',
+  error:   'bg-red-50 text-red-600',
+  warning: 'bg-amber-50 text-amber-600',
 }
 
 const ICONS: Record<ToastType, string> = {
@@ -30,10 +36,12 @@ const ICONS: Record<ToastType, string> = {
 
 function ToastCard({ toast, onClose }: { toast: ToastItem; onClose: () => void }) {
   return (
-    <div className={`flex items-start gap-3 px-4 py-3 rounded-xl shadow-lg min-w-72 max-w-sm animate-fade-in ${STYLES[toast.type]}`}>
-      <span className="font-bold mt-0.5 shrink-0">{ICONS[toast.type]}</span>
-      <p className="text-sm flex-1 leading-snug">{toast.message}</p>
-      <button onClick={onClose} className="opacity-70 hover:opacity-100 transition-opacity shrink-0 text-lg leading-none mt-0.5">
+    <div className={`flex items-start gap-3 px-4 py-3 rounded-xl shadow-lg min-w-72 max-w-sm ${STYLES[toast.type]}`}>
+      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${ICON_STYLES[toast.type]}`}>
+        {ICONS[toast.type]}
+      </span>
+      <p className="text-[13px] flex-1 leading-snug text-slate-700">{toast.message}</p>
+      <button onClick={onClose} className="text-slate-300 hover:text-slate-500 transition-colors shrink-0 text-lg leading-none mt-0.5">
         ×
       </button>
     </div>

@@ -406,10 +406,26 @@ export interface ReporteEstadoProcesoResponse {
   contentType?: string
 }
 
+export interface IndicadorTrimestre {
+  trimestre: string
+  cantidad: number
+}
+
+export interface AvanceFacultad {
+  facultad: string
+  enCurso: number
+  total: number
+  porcentaje: number
+}
+
 export interface TableroGerencialResponse {
   practicantesEnCursoPorPrograma: Record<string, number>
   tasaAprobacionGlobal: number
   empresasActivas: number
+  totalPracticasAsignadas?: number
+  estudiantesAprobadosPorTrimestre?: IndicadorTrimestre[]
+  empresasNuevasPorTrimestre?: IndicadorTrimestre[]
+  avancePorFacultad?: AvanceFacultad[]
 }
 
 export interface ProgramaConfiguracionResponse {

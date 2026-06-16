@@ -19,7 +19,6 @@ export default function LoginPage() {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([])
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  // Limpia el intervalo al desmontar el componente
   useEffect(() => {
     return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
   }, [])
@@ -136,33 +135,40 @@ export default function LoginPage() {
   const codigoExpirado = contadorIniciado && tiempoRestante === 0
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cue-primary via-cue-primary to-cue-secondary flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden border-2 border-white/20 shadow-[0_8px_40px_rgba(0,0,0,0.55)]">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-sm">
 
-        {/* Header */}
-        <div className="bg-cue-primary px-6 py-7 sm:px-8 sm:py-8 text-center">
-          <h1 className="text-xl sm:text-2xl font-bold text-white">Sistema de Prácticas</h1>
-          <p className="text-blue-300 text-xs sm:text-sm mt-1">Universidad Alexander Von Humboldt</p>
+        {/* Branding */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-cue-primary mb-4 shadow-lg shadow-cue-primary/30">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <h1 className="text-xl font-semibold text-slate-900 tracking-tight">Sistema de Prácticas</h1>
+          <p className="text-sm text-slate-500 mt-1">Universidad Alexander Von Humboldt</p>
         </div>
 
-        <div className="px-6 py-7 sm:px-8 sm:py-8">
+        {/* Card con hover glow indigo */}
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6
+                        transition-shadow duration-500
+                        hover:shadow-[0_0_50px_-8px_rgba(99,102,241,0.45)]">
 
           {/* ── PASO 1: Credenciales ── */}
           {paso === 'credenciales' && (
             <>
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-5 sm:mb-6">
-                Iniciar sesión
-              </h2>
+              <h2 className="text-[15px] font-semibold text-slate-900 mb-5">Iniciar sesión</h2>
 
               {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 mb-4 text-sm">
+                <div className="bg-red-50 border border-red-100 text-red-600 rounded-lg px-3 py-2.5 mb-4 text-xs leading-relaxed">
                   {error}
                 </div>
               )}
 
               <form onSubmit={handleCredenciales} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs font-medium text-slate-600 mb-1.5">
                     Correo electrónico
                   </label>
                   <input
@@ -177,7 +183,7 @@ export default function LoginPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs font-medium text-slate-600 mb-1.5">
                     Contraseña
                   </label>
                   <input
@@ -194,16 +200,16 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full btn-primary py-3 flex items-center justify-center text-sm sm:text-base"
+                  className="w-full btn-primary py-2.5 flex items-center justify-center mt-1"
                 >
                   {loading
-                    ? <><span className="animate-spin mr-2 text-lg">⟳</span>Verificando...</>
-                    : 'Ingresar'}
+                    ? <><span className="animate-spin mr-2">⟳</span>Verificando...</>
+                    : 'Continuar'}
                 </button>
               </form>
 
-              <p className="text-xs text-gray-400 mt-6 text-center">
-                Si no recuerdas tu contraseña, contacta al Administrador DTI.
+              <p className="text-xs text-slate-400 mt-5 text-center leading-relaxed">
+                ¿Olvidaste tu contraseña?<br />Contacta al Administrador DTI.
               </p>
             </>
           )}
@@ -211,33 +217,28 @@ export default function LoginPage() {
           {/* ── PASO 2: Verificación 2FA ── */}
           {paso === 'verificacion' && (
             <>
-              {/* Ícono de correo */}
-              <div className="flex justify-center mb-4">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-blue-50 rounded-full flex items-center justify-center">
-                  <svg className="w-7 h-7 sm:w-8 sm:h-8 text-cue-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="text-center mb-5">
+                <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-indigo-50 border border-indigo-100 mb-3">
+                  <svg style={{ width: '18px', height: '18px' }} className="text-cue-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8}
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
+                <h2 className="text-[15px] font-semibold text-slate-900">Verificación</h2>
+                <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                  Código enviado a{' '}
+                  <span className="font-medium text-slate-700 break-all">{correoConfirmado}</span>
+                </p>
               </div>
 
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-800 text-center mb-2">
-                Verificación en dos pasos
-              </h2>
-              <p className="text-sm text-gray-500 text-center mb-5 sm:mb-6 px-2">
-                Ingresa el código de 6 dígitos que enviamos a{' '}
-                <span className="font-medium text-gray-700 break-all">{correoConfirmado}</span>
-              </p>
-
               {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 mb-4 text-sm text-center">
+                <div className="bg-red-50 border border-red-100 text-red-600 rounded-lg px-3 py-2.5 mb-4 text-xs text-center">
                   {error}
                 </div>
               )}
 
               <form onSubmit={handleVerificacion}>
-                {/* Cajas de dígitos */}
-                <div className="flex justify-center gap-2 sm:gap-3 mb-5 sm:mb-6">
+                <div className="flex justify-center gap-2 mb-5">
                   {digitos.map((d, i) => (
                     <input
                       key={i}
@@ -251,12 +252,12 @@ export default function LoginPage() {
                       onPaste={i === 0 ? handlePaste : undefined}
                       onFocus={e => e.target.select()}
                       className={`
-                        w-10 h-12 sm:w-12 sm:h-14 text-center text-xl sm:text-2xl font-bold
-                        border-2 rounded-lg outline-none transition-colors
+                        w-10 h-12 text-center text-lg font-semibold
+                        border-2 rounded-xl outline-none transition-all duration-150
                         ${d
-                          ? 'border-cue-primary bg-blue-50 text-cue-primary'
-                          : 'border-gray-300 bg-white text-gray-900'}
-                        focus:border-cue-primary focus:ring-2 focus:ring-blue-200
+                          ? 'border-cue-accent bg-indigo-50 text-cue-accent'
+                          : 'border-slate-200 bg-slate-50 text-slate-900'}
+                        focus:border-cue-accent focus:bg-white focus:shadow-sm
                       `}
                     />
                   ))}
@@ -265,41 +266,40 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading || digitos.join('').length < 6 || codigoExpirado}
-                  className="w-full btn-primary py-3 flex items-center justify-center text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full btn-primary py-2.5 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading
-                    ? <><span className="animate-spin mr-2 text-lg">⟳</span>Verificando...</>
+                    ? <><span className="animate-spin mr-2">⟳</span>Verificando...</>
                     : 'Confirmar acceso'}
                 </button>
               </form>
 
-              {/* Contador y reenvío */}
               <div className="mt-4 text-center">
                 {contadorIniciado && (
                   codigoExpirado
-                    ? <p className="text-sm text-red-500 font-medium">El código ha expirado.</p>
-                    : <p className="text-sm text-gray-500">
-                        El código expira en{' '}
-                        <span className="font-semibold text-gray-700">{formatTiempo(tiempoRestante)}</span>
+                    ? <p className="text-xs text-red-500 font-medium">El código ha expirado.</p>
+                    : <p className="text-xs text-slate-500">
+                        Expira en{' '}
+                        <span className="font-semibold text-slate-700">{formatTiempo(tiempoRestante)}</span>
                       </p>
                 )}
 
-                <div className="mt-3 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <div className="mt-3 flex items-center justify-center gap-4">
                   <button
                     type="button"
                     onClick={reenviarCodigo}
                     disabled={loading}
-                    className="text-sm text-cue-primary hover:underline font-medium disabled:opacity-50"
+                    className="text-xs text-cue-accent hover:underline font-medium disabled:opacity-50"
                   >
                     Reenviar código
                   </button>
-                  <span className="hidden sm:inline text-gray-300">|</span>
+                  <span className="text-slate-200">|</span>
                   <button
                     type="button"
                     onClick={volverACredenciales}
-                    className="text-sm text-gray-500 hover:underline"
+                    className="text-xs text-slate-500 hover:text-slate-700 hover:underline"
                   >
-                    ← Volver al inicio de sesión
+                    ← Volver
                   </button>
                 </div>
               </div>

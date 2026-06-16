@@ -132,8 +132,11 @@ export const sprint4Service = {
     return res.data.datos!
   },
 
-  async tableroDireccion() {
-    const res = await api.get<ApiResponse<TableroGerencialResponse>>('/api/v1/reportes-sprint4/tablero-direccion')
+  async tableroDireccion(params?: { anio?: number; trimestre?: number }) {
+    const res = await api.get<ApiResponse<TableroGerencialResponse>>(
+      '/api/v1/reportes-sprint4/tablero-direccion',
+      { params }
+    )
     return res.data.datos!
   },
 

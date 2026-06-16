@@ -7,10 +7,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANTS: Record<NonNullable<ButtonProps['variant']>, string> = {
-  primary:   'bg-cue-primary text-white hover:bg-cue-secondary disabled:opacity-50',
-  secondary: 'bg-white text-cue-primary border border-cue-primary hover:bg-cue-light disabled:opacity-50',
+  primary:   'bg-cue-accent text-white hover:bg-cue-secondary shadow-sm disabled:opacity-50',
+  secondary: 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-50',
   danger:    'bg-red-600 text-white hover:bg-red-700 disabled:opacity-50',
-  ghost:     'text-gray-600 hover:bg-gray-100 disabled:opacity-50',
+  ghost:     'text-slate-600 hover:bg-slate-100 disabled:opacity-50',
 }
 
 const SIZES: Record<NonNullable<ButtonProps['size']>, string> = {
@@ -31,7 +31,7 @@ export function Button({
     <button
       {...rest}
       disabled={disabled || loading}
-      className={`inline-flex items-center justify-center gap-2 font-medium transition-colors ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 font-medium transition-all duration-150 ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
     >
       {loading && (
         <span className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-current" />

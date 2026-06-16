@@ -17,69 +17,77 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   return (
     <aside
       className={`
-        fixed top-0 left-0 h-full z-40 w-64 bg-cue-primary text-white flex flex-col shadow-lg
+        fixed top-0 left-0 h-full z-40 w-60 bg-cue-dark flex flex-col
         transition-transform duration-300 ease-in-out
         lg:static lg:translate-x-0 lg:z-auto lg:shrink-0
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
     >
-      {/* Logo / header */}
-      <div className="p-6 border-b border-blue-800 flex items-start justify-between">
+      {/* Logo */}
+      <div className="px-4 py-4 flex items-center justify-between border-b border-indigo-900/50">
         <div>
-          <h1 className="text-lg font-bold leading-tight">Prácticas Empresariales</h1>
-          <p className="text-blue-300 text-xs mt-1">Univ. Alexander Von Humboldt</p>
+          <h1 className="text-[13px] font-semibold text-white leading-snug tracking-wide">
+            Prácticas Empresariales
+          </h1>
+          <p className="text-[11px] text-indigo-400 mt-0.5">Univ. Alexander Von Humboldt</p>
         </div>
-        {/* Botón cerrar solo visible en móvil */}
         <button
           onClick={onClose}
-          className="lg:hidden text-blue-300 hover:text-white transition-colors text-xl leading-none mt-0.5 ml-2 shrink-0"
+          className="lg:hidden text-indigo-400 hover:text-white transition-colors p-1"
           aria-label="Cerrar menú"
         >
-          ✕
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
       </div>
 
-      {/* Info usuario */}
-      <div className="px-4 py-3 border-b border-blue-800">
-        <p className="text-sm font-medium truncate">{user.nombre}</p>
-        <span className="text-xs bg-blue-700 px-2 py-0.5 rounded-full mt-1 inline-block">
-          {ROL_LABELS[user.rol]}
-        </span>
-        {user.etiquetaCargo && (
-          <span className="text-xs text-blue-300 block mt-0.5">
-            {user.etiquetaCargo === 'SECRETARIA' ? 'Secretaría' : 'Coordinación'}
-          </span>
-        )}
+      {/* User info */}
+      <div className="px-3 pt-3">
+        <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-indigo-900/40 border border-indigo-800/40">
+          <div className="w-7 h-7 rounded-lg bg-cue-accent text-white flex items-center justify-center text-xs font-bold shrink-0">
+            {user.nombre.charAt(0).toUpperCase()}
+          </div>
+          <div className="min-w-0">
+            <p className="text-[12px] font-medium text-white truncate leading-tight">{user.nombre}</p>
+            <p className="text-[11px] text-indigo-400 truncate mt-0.5">{ROL_LABELS[user.rol]}</p>
+          </div>
+        </div>
       </div>
 
-      {/* Menú dinámico por rol */}
-      <nav className="flex-1 overflow-y-auto py-4">
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.id}
-            to={item.ruta}
-            onClick={onClose}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 text-sm transition-colors ${
-                isActive
-                  ? 'bg-cue-secondary text-white font-medium'
-                  : 'text-blue-200 hover:bg-blue-800 hover:text-white'
-              }`
-            }
-          >
-            <span>{item.icono}</span>
-            <span>{item.label}</span>
-          </NavLink>
-        ))}
+      {/* Nav */}
+      <nav className="flex-1 overflow-y-auto py-3 px-3">
+        <div className="space-y-0.5">
+          {menuItems.map((item) => (
+            <NavLink
+              key={item.id}
+              to={item.ruta}
+              onClick={onClose}
+              className={({ isActive }) =>
+                `flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[13px] transition-all duration-150 ${
+                  isActive
+                    ? 'bg-cue-accent text-white font-medium shadow-sm shadow-cue-accent/30'
+                    : 'text-indigo-300 hover:bg-indigo-900/40 hover:text-white'
+                }`
+              }
+            >
+              <span className="text-[15px] leading-none">{item.icono}</span>
+              <span className="leading-tight">{item.label}</span>
+            </NavLink>
+          ))}
+        </div>
       </nav>
 
       {/* Logout */}
-      <div className="p-4 border-t border-blue-800">
+      <div className="p-3 border-t border-indigo-900/50">
         <button
           onClick={logout}
-          className="w-full text-sm text-blue-300 hover:text-white transition-colors text-left flex items-center gap-2"
+          className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[13px] text-indigo-400 hover:bg-indigo-900/40 hover:text-white transition-all duration-150"
         >
-          <span>🚪</span> Cerrar sesión
+          <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          Cerrar sesión
         </button>
       </div>
     </aside>

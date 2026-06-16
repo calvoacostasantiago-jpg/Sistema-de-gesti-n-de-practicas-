@@ -14,11 +14,10 @@ export default function MainLayout() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      {/* Overlay oscuro en móvil cuando el sidebar está abierto */}
+    <div className="flex h-screen bg-slate-50">
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          className="fixed inset-0 bg-black/40 z-30 lg:hidden backdrop-blur-sm"
           onClick={() => setSidebarOpen(false)}
         />
       )}
