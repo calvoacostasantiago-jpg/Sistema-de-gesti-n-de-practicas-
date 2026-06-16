@@ -32,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -75,6 +76,16 @@ public class AuthService {
     @Transactional
     public LoginPendienteResponse login(LoginRequest request, String ipOrigen) {
         try {
+            log.info("DEBUG_LOGIN_CORREO {}", request.getCorreo());
+            Optional<Usuario> usuarioDiagnostico = usuarioRepository.findByCorreo(request.getCorreo());
+            log.info("DEBUG_LOGIN_USUARIO_ENCONTRADO {}", usuarioDiagnostico.isPresent());
+            usuarioDiagnostico.ifPresent(usuario -> {
+                log.info("DEBUG_LOGIN_ACTIVO {}", usuario.isActivo());
+                log.info("DEBUG_LOGIN_ESTADO {}", usuario.getEstadoCuenta());
+                log.info("DEBUG_LOGIN_PASSWORD_MATCH {}",
+                        passwordEncoder.matches(request.getPassword(), usuario.getPasswordHash()));
+            });
+
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getPassword())
             );
